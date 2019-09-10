@@ -7,12 +7,13 @@ Proyecto basado en el modelo de traducción de imagen a imagen Pix2Pix(https://p
 
 ### Requisitos:
 tensorflow == 1.5 (o tensorflow-gpu == 1.5)
-tkinter
-python-opencv
-PIL
-imutils
-numpy
-scipy
+..*tkinter
+..*python-opencv
+..*PIL
+..*imutils
+..*numpy
+..*scipy
+
 ### Instrucciones:
 '''sh
 # Clonar el repositorio

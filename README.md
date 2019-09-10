@@ -1,5 +1,5 @@
 # edge2art
-Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix]***(https://phillipi.github.io/pix2pix/): Redes Adversarias Generativas Condicionales.
+Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Redes Adversarias Generativas Condicionales.
 
 ***edge2art*** se ve inspirado por ***[CycleGAN](https://junyanz.github.io/CycleGAN/)***. ***edge2art*** es capaz de crear arte utilizando el modelo **Pix2Pix**.
 

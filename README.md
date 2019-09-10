@@ -26,10 +26,10 @@ Redimensionar las imágenes a un tamaño de 256x256 píxeles:
 ```sh
 cd Creación\ del\ Dataset/
 python3 preprocess.py --input_dir <path al directorio que contiene las imágenes originales> --output_dir <path del directorio dónde guardar las imágenes redimensionadas> --operation 
-'''
+```
 
 Extraer los bordes de las imágenes redimensionadas:
-'''sh
+```sh
 cd Creación\ del\ Dataset/
 python3 images2edges.py --input_dir <path al directorio con las imágenes normales> --output_dir <ṕath al directorio de guardado de las imágenes de bordes>
 ```

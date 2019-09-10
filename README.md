@@ -54,8 +54,9 @@ python3 freeze_model.py --model_folder <path al directorio que contiene el model
 ```
   ** El modelo se guardará con el nombre "frozen_model.pb" en este mismod directorio.
   ** Deberá mover los modelos exportados a una carpeta llamada "models" que se ubique en el mismo directorio que el archivo edge2art.py
- 
-Probando edge2art:
+
+## Experimentando con edge2art
+Correr la GUI de edge2art:
 ```sh
 python3 edge2art.py
 ```

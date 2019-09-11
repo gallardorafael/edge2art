@@ -8,7 +8,10 @@ Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](http
 * Traducir videos en animaciones artisticas
 
 Los resultados se pueden apreciar en las siguientes demostraciones: 
+![Rococo](https://github.com/gallardorafael/edge2art/blob/master/docs/dot_rococo.gif)
+![Ukiyo](https://github.com/gallardorafael/edge2art/blob/master/docs/robot_ukiyo.gif)
 
+Para una demostración completa ver el [video](link_al_video) demostrativo en Youtube.
 
 ***edge2art*** se ve inspirado por ***[CycleGAN](https://junyanz.github.io/CycleGAN/)***. ***edge2art*** es capaz de crear arte utilizando el modelo **Pix2Pix**.
 
@@ -48,6 +51,7 @@ Para facilitar la utilización de edge2art están disponibles 3 modelos pre entr
 
 ## Entrenamiento: 
 ### Instrucciones:
+Clonar el repositorio:
 ```sh
 # Clonar el repositorio
 git clone https://github.com/gallardorafael/edge2art.git
@@ -65,6 +69,14 @@ Extraer los bordes de las imágenes redimensionadas:
 cd Creación\ del\ Dataset/
 python3 images2edges.py --input_dir <path al directorio con las imágenes normales> --output_dir <ṕath al directorio de guardado de las imágenes de bordes>
 ```
+
+La estructura general de las imágenes de entrenamiento es la siguiente:
+![atob](https://github.com/gallardorafael/edge2art/blob/master/docs/ab.png)
+
+Por ejemplo:
+
+
+![ejemplo](https://github.com/gallardorafael/edge2art/blob/master/docs/abejemplo.png)
 
 Crear el dataset AtoB para Pix2Pix:
 ```sh
@@ -88,6 +100,10 @@ python3 freeze_model.py --model_folder <path al directorio que contiene el model
   ** Deberá mover los modelos exportados a una carpeta llamada "models" que se ubique en el mismo directorio que el archivo edge2art.py
 
 ## Experimentando con edge2art
+edge2art tiene una GUI simple que guía al usuario por sus 3 funcionalidades distintas, no es necesario nada más que añadir los archivos de entrada y observar como se renderiza el resultado.
+
+![gui](https://github.com/gallardorafael/edge2art/blob/master/docs/gui.png)
+
 Correr la GUI de edge2art:
 ```sh
 python3 edge2art.py

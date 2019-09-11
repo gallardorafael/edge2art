@@ -11,7 +11,7 @@ Los resultados se pueden apreciar en las siguientes demostraciones:
 ![Rococo](https://github.com/gallardorafael/edge2art/blob/master/docs/dot_rococo.gif)
 ![Ukiyo](https://github.com/gallardorafael/edge2art/blob/master/docs/robot_ukiyo.gif)
 
-Para una demostración completa ver el [video](link_al_video) demostrativo en Youtube.
+Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) demostrativo en Youtube.
 
 ***edge2art*** se ve inspirado por ***[CycleGAN](https://junyanz.github.io/CycleGAN/)***. ***edge2art*** es capaz de crear arte utilizando el modelo **Pix2Pix**.
 

@@ -1,6 +1,15 @@
 # edge2art
 Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Redes Adversarias Generativas Condicionales.
 
+## Funcionalidades
+***edge2art*** es capaz de traducir cualquier imagen en un estilo artistico utilizando la extracción de bordes para favorecer la generación de contenido de la cGAN. Desde la GUI de edge2art es posible:
+* Convertir imágenes en arte
+* Ver video en tiempo real en algún estilo artístico
+* Traducir videos en animaciones artisticas
+
+Los resultados se pueden apreciar en las siguientes demostraciones: 
+
+
 ***edge2art*** se ve inspirado por ***[CycleGAN](https://junyanz.github.io/CycleGAN/)***. ***edge2art*** es capaz de crear arte utilizando el modelo **Pix2Pix**.
 
 ## Instalación
@@ -14,6 +23,30 @@ Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](http
 * numpy
 * scipy
 
+### Datasets
+#### Dataset de ejemplo
+El dataset de la corriente Rococó, se encuentra disponible para su descarga en: [Rococó](https://drive.google.com/open?id=1lSdUbAf-OFjQCVrgRM8L1nL0R2dnV4ng), este dataset tiene un total de 2089 obras de arte en la corriente artística conocida como Rococó. El dataset está listo comenzar el entrenamiento de pix2pix con dirección AtoB. Para dar una idea del tiempo necesario para entrenar esta corriente se presentan los tiempos de entrenamiento en diversas plataformas:
+* TensorFlow con Intel Core i7 6700HQ: ~108 horas.
+* TensorFlow con Nvidia GTX 960 : ~59 horas.
+* TensorFlow con Nvidia Tesla K80: ~30 horas.
+* TensorFlow con Nvidia Tesla T4: ~10 horas.
+
+Tomar en consideración previo al entrenamiento.
+
+#### Crear tus propios datasets
+Sin embargo, existe la posibilidad de crear datasets con las imágenes que se deseen, este proceso está detallado en la sección de ***Entrenamiento***. 
+
+#### Wikiart Dataset Completo
+Adicional a esto, se puede descargar el dataset de Wikiart completo [aquí](http://web.fsktm.um.edu.my/~cschan/source/ICIP2017/wikiart.zip). Este dataset contiene una gran variedad de corrientes artísticos y fue utilizado para el entrenamiento de [ArtGAN](https://github.com/cs-chan/ArtGAN). Para entrenar con alguna de las corrientes en este dataset, es necesario primero aplicar el preprocesamiento descrito en la sección siguiente.
+
+#### Modelos pre-entrenados
+Para facilitar la utilización de edge2art están disponibles 3 modelos pre entrenados para su descarga, estos modelos se estan "congelados" y se pueden descargar en las siguientes ligas, estos modelos se deben guardar dentro de una carpeta llamada "frozen_models":
+* [Rococó](https://drive.google.com/open?id=1EMYiRRHVmGDPkruFzhvVijlH3effR2pH)
+* [Ukiyo-e](https://drive.google.com/open?id=1gBifqL0b1wnrtVJCSiWIqe46wcwg6vwI)
+* [Fauvismo](https://drive.google.com/open?id=1ZSYB4CqPyRmr0xNjvK25-UpXYt6RInuT)
+* [Van Gogh](https://drive.google.com/open?id=1cCL8K9OUha6ME7l_jBYva7bmU-5tePAe)
+
+## Entrenamiento: 
 ### Instrucciones:
 ```sh
 # Clonar el repositorio
@@ -21,7 +54,6 @@ git clone https://github.com/gallardorafael/edge2art.git
 cd edge2art
 ``` 
 
-## Entrenamiento: 
 Redimensionar las imágenes a un tamaño de 256x256 píxeles:
 ```sh
 cd Creación\ del\ Dataset/
@@ -60,4 +92,4 @@ Correr la GUI de edge2art:
 ```sh
 python3 edge2art.py
 ```
- ** La interfaz gráfica permite varias opciones. 
+

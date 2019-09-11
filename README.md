@@ -26,9 +26,15 @@ Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) dem
 * numpy
 * scipy
 
+### Clonar el repositorio:
+```sh
+# Clonar el repositorio
+git clone https://github.com/gallardorafael/edge2art.git
+cd edge2art
+``` 
 ### Datasets
 #### Dataset de ejemplo
-El dataset de la corriente Rococó, se encuentra disponible para su descarga en: [Rococó](https://drive.google.com/open?id=1lSdUbAf-OFjQCVrgRM8L1nL0R2dnV4ng), este dataset tiene un total de 2089 obras de arte en la corriente artística conocida como Rococó. El dataset está listo comenzar el entrenamiento de pix2pix con dirección AtoB. Para dar una idea del tiempo necesario para entrenar esta corriente se presentan los tiempos de entrenamiento en diversas plataformas:
+El dataset de la corriente Rococó, se encuentra disponible para su descarga en: [Rococó](https://drive.google.com/open?id=1Q4lUnhlGs10tsJFisWfO4-HmFdbxFai1), este dataset tiene un total de 2089 obras de arte en la corriente artística conocida como Rococó. El dataset está listo comenzar el entrenamiento de pix2pix con dirección AtoB. Para dar una idea del tiempo necesario para entrenar esta corriente se presentan los tiempos de entrenamiento en diversas plataformas:
 * TensorFlow con Intel Core i7 6700HQ: ~108 horas.
 * TensorFlow con Nvidia GTX 960 : ~59 horas.
 * TensorFlow con Nvidia Tesla K80: ~30 horas.
@@ -38,6 +44,16 @@ Tomar en consideración previo al entrenamiento.
 
 #### Crear tus propios datasets
 Sin embargo, existe la posibilidad de crear datasets con las imágenes que se deseen, este proceso está detallado en la sección de ***Entrenamiento***. 
+
+##### Van Gogh Dataset
+Para obtener el dataset del estilo de Van Gogh se extrajeron todos los frames de los trailers de la película de Loving Vincent, se les aplicó el preprocesamiento y se entrenó el modelo.
+El dataset extraído de dicha película está disponible [aquí](https://drive.google.com/open?id=11yYohJwZMdZzq7QRZtQqQF1QIeHCxlf6). Es importante destacar que ya se encuentra redimensionado al tamaño requerido por pix2pix. 
+
+Si se desea extraer los frames de cualquier otro video con fines experimentales, el script de extracción de frames se encuentra disponible dentro de la carpeta Creación del Dataset.
+```sh
+cd Creación\ del\ Dataset/
+python3 extract_video_frames.py --input_video <path del video a procesar> --output_dir <path en donde guardar los frames extraidos>
+```
 
 #### Wikiart Dataset Completo
 Adicional a esto, se puede descargar el dataset de Wikiart completo [aquí](http://web.fsktm.um.edu.my/~cschan/source/ICIP2017/wikiart.zip). Este dataset contiene una gran variedad de corrientes artísticos y fue utilizado para el entrenamiento de [ArtGAN](https://github.com/cs-chan/ArtGAN). Para entrenar con alguna de las corrientes en este dataset, es necesario primero aplicar el preprocesamiento descrito en la sección siguiente.
@@ -51,13 +67,6 @@ Para facilitar la utilización de edge2art están disponibles 3 modelos pre entr
 
 ## Entrenamiento: 
 ### Instrucciones:
-Clonar el repositorio:
-```sh
-# Clonar el repositorio
-git clone https://github.com/gallardorafael/edge2art.git
-cd edge2art
-``` 
-
 Redimensionar las imágenes a un tamaño de 256x256 píxeles:
 ```sh
 cd Creación\ del\ Dataset/

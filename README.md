@@ -59,7 +59,7 @@ python3 extract_video_frames.py --input_video <path del video a procesar> --outp
 Adicional a esto, se puede descargar el dataset de Wikiart completo [aquí](http://web.fsktm.um.edu.my/~cschan/source/ICIP2017/wikiart.zip). Este dataset contiene una gran variedad de corrientes artísticos y fue utilizado para el entrenamiento de [ArtGAN](https://github.com/cs-chan/ArtGAN). Para entrenar con alguna de las corrientes en este dataset, es necesario primero aplicar el preprocesamiento descrito en la sección siguiente.
 
 #### Modelos pre-entrenados
-Para facilitar la utilización de edge2art están disponibles 4 modelos pre entrenados para su descarga, estos modelos se estan "congelados" y se pueden descargar en las siguientes ligas, estos modelos se deben guardar dentro de una carpeta llamada "frozen_models":
+Para facilitar la utilización de edge2art están disponibles 4 modelos pre entrenados para su descarga, estos modelos están "congelados" y se pueden descargar en las siguientes ligas, estos modelos se deben guardar dentro de una carpeta llamada "frozen_models":
 * [Rococó](https://drive.google.com/open?id=1EMYiRRHVmGDPkruFzhvVijlH3effR2pH)
 * [Ukiyo-e](https://drive.google.com/open?id=1gBifqL0b1wnrtVJCSiWIqe46wcwg6vwI)
 * [Fauvismo](https://drive.google.com/open?id=1ZSYB4CqPyRmr0xNjvK25-UpXYt6RInuT)

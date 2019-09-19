@@ -19,8 +19,8 @@ Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) dem
 
 ### Requisitos:
 * tensorflow == 1.5 (o tensorflow-gpu == 1.5)
-* tkinter
-* python-opencv
+* python3-tk
+* opencv-python
 * PIL
 * imutils
 * numpy

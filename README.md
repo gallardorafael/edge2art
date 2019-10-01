@@ -109,6 +109,8 @@ python3 freeze_model.py --model_folder <path al directorio que contiene el model
   ** Deberá mover los modelos exportados a una carpeta llamada "models" que se ubique en el mismo directorio que el archivo edge2art.py
 
 ## Experimentando con edge2art
+
+### Utilizando la interfaz gráfica de Tkinter
 edge2art tiene una GUI simple que guía al usuario por sus 3 funcionalidades distintas, no es necesario nada más que añadir los archivos de entrada y observar como se renderiza el resultado.
 
 ![gui](https://github.com/gallardorafael/edge2art/blob/master/docs/gui.png)
@@ -118,3 +120,23 @@ Correr la GUI de edge2art:
 python3 edge2art.py
 ```
 
+### Utilizando la linea de comandos
+edge2art cuenta con una versión funcional desde linea de comandos. Dicha puede ser utilizada como método adicional a la GUI.
+#### Opciones el parámetro --style:
+* rococo
+* ukiyo
+* fauvism
+* vangogh
+
+Para ejecutar edge2art_script en tiempo real:
+```sh
+python3 edge2art_script.py --mode realtime --style <estilo>
+```
+Para ejecutar edge2art_script en modo traducción de imagen:
+```sh
+python3 edge2art_script.py --mode photo --style <estilo> --input_dir <directorio_de_imagen> --output_dir <directorio_de_guardado> 
+```
+Para ejecutar edge2art_script en modo traducción de de video:
+```sh
+python3 edge2art_script.py --mode video --style <estilo> --input_dir <directorio_de_video> --output_dir <directorio_de_guardado> 
+```

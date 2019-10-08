@@ -71,7 +71,7 @@ Para facilitar la utilización de edge2art están disponibles 4 modelos pre entr
 Redimensionar las imágenes a un tamaño de 256x256 píxeles:
 ```sh
 cd Creación\ del\ Dataset/
-python3 preprocess.py --input_dir <path al directorio que contiene las imágenes originales> --output_dir <path del directorio dónde guardar las imágenes redimensionadas> --operation 
+python3 preprocess.py --input_dir <path al directorio que contiene las imágenes originales> --output_dir <path del directorio dónde guardar las imágenes redimensionadas> --operation resize
 ```
 
 Extraer los bordes de las imágenes redimensionadas:

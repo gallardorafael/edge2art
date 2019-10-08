@@ -8,7 +8,6 @@ Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](http
 * Traducir videos en animaciones artisticas
 
 Los resultados se pueden apreciar en las siguientes demostraciones: 
-![Rococo](https://github.com/gallardorafael/edge2art/blob/master/docs/dot_rococo.gif)
 ![Fauvism](https://github.com/gallardorafael/edge2art/blob/master/docs/dodge_fauvism.gif)
 ![Ukiyo](https://github.com/gallardorafael/edge2art/blob/master/docs/robot_ukiyo.gif)
 

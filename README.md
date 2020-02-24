@@ -21,7 +21,7 @@ Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) dem
 * tensorflow == 1.14.0 (o tensorflow-gpu 1.14.0)
 * python3-tk
 * opencv-python
-* PIL
+* Pillow
 * imutils
 * numpy
 * scipy

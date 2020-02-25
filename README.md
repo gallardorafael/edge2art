@@ -1,23 +1,21 @@
 # edge2art
-Proyecto basado en el modelo de traducción de imagen a imagen ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Redes Adversarias Generativas Condicionales.
+Project based on the Pix2Pix model ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Image to Image Translation with Condicional Generative Adversarial Networks
 
-## Funcionalidades
-***edge2art*** es capaz de traducir cualquier imagen en un estilo artistico utilizando la extracción de bordes para favorecer la generación de contenido de la cGAN. Desde la GUI de edge2art es posible:
-* Convertir imágenes en arte
-* Ver video en tiempo real en algún estilo artístico
-* Traducir videos en animaciones artisticas
+## Functionalities
+***edge2art*** is able to translate any image into an artistic style by extrating the edges of the image in order to favor the generated content by the cGAN. The edge2art GUI, users can:
+* Convert any image into an artwork
+* See a real-time artistic version of their webcam video
+* Translate common videos into artistic animations
 
-Los resultados se pueden apreciar en las siguientes demostraciones: 
+The following GIFs are demonstrations of the results obtained by edge2art: 
 ![Fauvism](https://github.com/gallardorafael/edge2art/blob/master/docs/dodge_fauvism.gif)
 ![Ukiyo](https://github.com/gallardorafael/edge2art/blob/master/docs/robot_ukiyo.gif)
 
-Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) demostrativo en Youtube.
+A fulll demonstration is available in the following youtube [video](https://youtu.be/7BrNVLDM1dE).
 
-***edge2art*** se ve inspirado por ***[CycleGAN](https://junyanz.github.io/CycleGAN/)***. ***edge2art*** es capaz de crear arte utilizando el modelo **Pix2Pix**.
+## Installation
 
-## Instalación
-
-### Requisitos:
+### Requirements:
 * tensorflow == 1.14.0 (o tensorflow-gpu 1.14.0)
 * python3-tk
 * opencv-python
@@ -26,117 +24,120 @@ Para una demostración completa ver el [video](https://youtu.be/7BrNVLDM1dE) dem
 * numpy
 * scipy
 
-### Clonar el repositorio:
+### Clone the repo:
 ```sh
-# Clonar el repositorio
+# Cloning the repository
 git clone https://github.com/gallardorafael/edge2art.git
 cd edge2art
 ``` 
 ### Datasets
-#### Dataset de ejemplo
-El dataset de la corriente Rococó, se encuentra disponible para su descarga en: [Rococó](https://drive.google.com/open?id=1Q4lUnhlGs10tsJFisWfO4-HmFdbxFai1), este dataset tiene un total de 2089 obras de arte en la corriente artística conocida como Rococó. El dataset está listo comenzar el entrenamiento de pix2pix con dirección AtoB. Para dar una idea del tiempo necesario para entrenar esta corriente se presentan los tiempos de entrenamiento en diversas plataformas:
-* TensorFlow con Intel Core i7 6700HQ: ~108 horas.
-* TensorFlow con Nvidia GTX 960 : ~59 horas.
-* TensorFlow con Nvidia Tesla K80: ~30 horas.
-* TensorFlow con Nvidia Tesla T4: ~10 horas.
+#### Example dataset
+The example dataset is from the Rococo artistic style, it is available for download in: [Rococó](https://drive.google.com/open?id=1Q4lUnhlGs10tsJFisWfO4-HmFdbxFai1), this dataset has a total of 2089 Rococo artworks, the dataset is ready to begin the training phase with pix2pix in AtoB direction. Estimated training times are ahead: 
+* TensorFlow with Intel Core i7 6700HQ: ~108 horas.
+* TensorFlow with Nvidia GTX 960 : ~59 horas.
+* TensorFlow with Nvidia Tesla K80: ~30 horas.
+* TensorFlow with Nvidia Tesla T4: ~10 horas.
 
-Tomar en consideración previo al entrenamiento.
+Consider the times before begin the training.
 
-#### Crear tus propios datasets
-Sin embargo, existe la posibilidad de crear datasets con las imágenes que se deseen, este proceso está detallado en la sección de ***Entrenamiento***. 
+#### Create your own datasets
+You can create your own datasets with every set of images you want. This process is full detailed in ***Training*** section.
 
 ##### Van Gogh Dataset
-Para obtener el dataset del estilo de Van Gogh se extrajeron todos los frames de los trailers de la película de Loving Vincent, se les aplicó el preprocesamiento y se entrenó el modelo.
-El dataset extraído de dicha película está disponible [aquí](https://drive.google.com/open?id=11yYohJwZMdZzq7QRZtQqQF1QIeHCxlf6). Es importante destacar que ya se encuentra redimensionado al tamaño requerido por pix2pix. 
+In order to obtain a Van Gogh dataset, the frames of the trailers of the movie "Loving Vincent" were extracted. Then, a pre-processing phase were applied before training. The Van Gogh dataset extracted from the movie is available for download [here](https://drive.google.com/open?id=11yYohJwZMdZzq7QRZtQqQF1QIeHCxlf6). Images in the dataset are already sized to 256x256 pixels.
 
-Si se desea extraer los frames de cualquier otro video con fines experimentales, el script de extracción de frames se encuentra disponible dentro de la carpeta Creación del Dataset.
+If you want to extract the frames of every other video, the script to achieve this was included inside the dataset_creation folder.
 ```sh
-cd Creación\ del\ Dataset/
-python3 extract_video_frames.py --input_video <path del video a procesar> --output_dir <path en donde guardar los frames extraidos>
+cd dataset_creation
+python3 extract_video_frames.py --input_video <path to the video file> --output_dir <path to save the frames>
 ```
 
-#### Wikiart Dataset Completo
-Adicional a esto, se puede descargar el dataset de Wikiart completo [aquí](http://web.fsktm.um.edu.my/~cschan/source/ICIP2017/wikiart.zip). Este dataset contiene una gran variedad de corrientes artísticos y fue utilizado para el entrenamiento de [ArtGAN](https://github.com/cs-chan/ArtGAN). Para entrenar con alguna de las corrientes en este dataset, es necesario primero aplicar el preprocesamiento descrito en la sección siguiente.
-
-#### Modelos pre-entrenados
-Para facilitar la utilización de edge2art están disponibles 4 modelos pre entrenados para su descarga, estos modelos están "congelados" y se pueden descargar en las siguientes ligas, estos modelos se deben guardar dentro de una carpeta llamada "frozen_models":
+#### Pre-trained models
+In order to ease the test and use of edge2art, 4 pre-trained models are available to download and use. These models are frozen and can be downloaded in the following links.
 * [Rococó](https://drive.google.com/open?id=1EMYiRRHVmGDPkruFzhvVijlH3effR2pH)
 * [Ukiyo-e](https://drive.google.com/open?id=1gBifqL0b1wnrtVJCSiWIqe46wcwg6vwI)
 * [Fauvismo](https://drive.google.com/open?id=1ZSYB4CqPyRmr0xNjvK25-UpXYt6RInuT)
 * [Van Gogh](https://drive.google.com/open?id=1cCL8K9OUha6ME7l_jBYva7bmU-5tePAe)
+NOTE: Pre-trained models should be saved into the "frozen_models" folder.
 
-## Entrenamiento: 
-### Instrucciones:
-Redimensionar las imágenes a un tamaño de 256x256 píxeles:
+#### Full Wikiart dataset
+The full wikiart dataset can be downloaded [here](http://web.fsktm.um.edu.my/~cschan/source/ICIP2017/wikiart.zip). The full dataset contains a big variety of artistic styles and was used to train [ArtGAN](https://github.com/cs-chan/ArtGAN). If you want to train edge2art in any of these styles, you should first apply a pre-processing phase, described in the following section.
+
+## Training: 
+### Instructions:
+Resize images to 256x256 pixels:
 ```sh
-cd Creación\ del\ Dataset/
-python3 preprocess.py --input_dir <path al directorio que contiene las imágenes originales> --output_dir <path del directorio dónde guardar las imágenes redimensionadas> --operation resize
+cd dataset_creation/
+python3 preprocess.py --input_dir <path to the original images folder> --output_dir <path to save resized images> --operation resize
 ```
 
-Extraer los bordes de las imágenes redimensionadas:
+Extract the edges from the resized images:
 ```sh
-cd Creación\ del\ Dataset/
-python3 images2edges.py --input_dir <path al directorio con las imágenes normales> --output_dir <ṕath al directorio de guardado de las imágenes de bordes>
+cd dataset_creation/
+python3 images2edges.py --input_dir <path to the resized images folder> --output_dir <path to save the extracted edges>
 ```
 
-La estructura general de las imágenes de entrenamiento es la siguiente:
+The structure of the training images is the following: 
 ![atob](https://github.com/gallardorafael/edge2art/blob/master/docs/ab.png)
 
-Por ejemplo:
-
+For example:
 
 ![ejemplo](https://github.com/gallardorafael/edge2art/blob/master/docs/abejemplo.png)
 
-Crear el dataset AtoB para Pix2Pix:
+Creating an AtoB dataset for pix2pix:
 ```sh
-cd Creación\ del\ Dataset/
-python3 edge2art_dataset.py --a_dir <path al directorio con las imágenes de bordes> --b_dir <path al directorio con las imágenes normales> --output_dir <path al directorio de guardado del dataset de entrenamiento>
+cd dataset_creation/
+python3 edge2art_dataset.py --a_dir <path to the edges folder> --b_dir <path to the resized images> --output_dir <path to save the training images)>
 ```
  
-Entrenamiento del modelo:
+Training the model:
 ```sh
-python3 pix2pix.py --input_dir <path del directorio con las imágenes de entrenamiento> --output_dir <path al directorio dónde guardar el modelo> --mode train --max_epochs 200 --which_direction AtoB
+python3 pix2pix.py --input_dir <path to the folder with training images> --output_dir <path to save the trained model> --mode train --max_epochs 200 --which_direction AtoB
 ```
+NOTE: The max_epochs parameter depends on your own needs.
 
-Reducir y exportar el modelo:
+Reducing and frozing the model:
 ```sh
-cd Reducción\ de\ Modelos/
-python3 reduce_model.py --model-input <path al directorio con el modelo entrenado previamente> --model-output <path al directorio dónde guardar el modelo reducido>
+cd model_reduction/
+python3 reduce_model.py --model-input <path to the folder with the trained model> --model-output <path to save the reduced model>
 
-python3 freeze_model.py --model_folder <path al directorio que contiene el modelo reducido>
+python3 freeze_model.py --model_folder <path to save the frozen model>
 ```
-  ** El modelo se guardará con el nombre "frozen_model.pb" en este mismod directorio.
-  ** Deberá mover los modelos exportados a una carpeta llamada "models" que se ubique en el mismo directorio que el archivo edge2art.py
+  ** The model will be saved as "frozen_model.pb" in the specified folder.
+  ** You must move the frozen models to the "frozen_models" folder inside the edge2art folder.
 
-## Experimentando con edge2art
+## Testing edge2art
 
-### Utilizando la interfaz gráfica de Tkinter
-edge2art tiene una GUI simple que guía al usuario por sus 3 funcionalidades distintas, no es necesario nada más que añadir los archivos de entrada y observar como se renderiza el resultado.
+### Using the Tkinter GUI
+
+edge2art includes an easy-to-use GUI with 3 functionalities: Real time visualization, image translation or video translation. Just select the desired style and have fun!
 
 ![gui](https://github.com/gallardorafael/edge2art/blob/master/docs/gui.png)
 
-Correr la GUI de edge2art:
+Running the edge2art GUI:
 ```sh
 python3 edge2art.py
 ```
 
-### Utilizando la linea de comandos
-edge2art cuenta con una versión funcional desde linea de comandos. Dicha puede ser utilizada como método adicional a la GUI.
-#### Opciones el parámetro --style:
+### Running edge2art from command line
+edg2art also includes a python script, in case you don't want to use the GUI.
+
+#### Options for the --style parameter:
 * rococo
 * ukiyo
 * fauvism
 * vangogh
 
-Para ejecutar edge2art_script en tiempo real:
+Running edge2art_script in real time mode:
 ```sh
-python3 edge2art_script.py --mode realtime --style <estilo>
+python3 edge2art_script.py --mode realtime --style <style>
 ```
-Para ejecutar edge2art_script en modo traducción de imagen:
+
+Running edge2art_script in image translation mode:
 ```sh
-python3 edge2art_script.py --mode photo --style <estilo> --input_dir <directorio_de_imagen> --output_dir <directorio_de_guardado> 
+python3 edge2art_script.py --mode photo --style <style> --input_dir <path to image file> --output_dir <path to save the translated image> 
 ```
-Para ejecutar edge2art_script en modo traducción de de video:
+Running edge2art_script in video translation mode:
 ```sh
-python3 edge2art_script.py --mode video --style <estilo> --input_dir <directorio_de_video> --output_dir <directorio_de_guardado> 
+python3 edge2art_script.py --mode video --style <style> --input_dir <path to video file> --output_dir <path to save the translated video> 
 ```

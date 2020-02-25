@@ -11,7 +11,7 @@ CROP_SIZE = 256
 DOWNSAMPLE_RATIO = 4
 global preview
 
-# Diseño de la ventana principal.
+# Desing of the main windows
 root = tk.Tk()
 root.title("edge2art")
 root.geometry("256x256")
@@ -22,19 +22,19 @@ bg_image = ImageTk.PhotoImage(or_bg_image)
 background = tk.Label(root, image=bg_image)
 background.place(x=0, y=0, relwidth=1, relheight=1)
 
-# Seleccionar estilo(modelo)
+# Select style (model)
 var = tk.StringVar(root)
-var.set("Selecciona un estilo")
+var.set("Select a style")
 dropDownMenu = tk.OptionMenu(root, var,
                                 "Ukiyo-e",
-                                "Rococó",
-                                "Fauvismo",
+                                "Rococo",
+                                "Fauvism",
                                 "Van Gogh",
                                 )
 dropDownMenu.place(x = 37, y = 20)
 
 def load_graph(graph_filename):
-    #Carga el modelo en la memoria.
+    # Load the pre-trained model into the memory
     graph = tf.Graph()
     with graph.as_default():
         od_graph_def = tf.GraphDef()
@@ -51,10 +51,10 @@ def auto_canny(image, sigma=0.33):
     return cv2.Canny(image, lower, upper)
 
 def resize_in(image):
-    # Tamaño a 256x256
+    # Size to 256x256
     height, width = image.shape
     if height != width:
-        # crop to correct ratio
+        # Crop to correct ratio
         size = min(height, width)
         oh = (height - size) // 2
         ow = (width - size) // 2
@@ -63,7 +63,7 @@ def resize_in(image):
         return image_resize
 
 def resize_out(image):
-    # Tamaño a 256x256
+    # Size to 256x256
     height, width, _ = image.shape
     if height != width:
         # crop to correct ratio
@@ -76,7 +76,7 @@ def resize_out(image):
 
 def real_time():
     # TensorFlow
-    if var.get() == "Rococó":
+    if var.get() == "Rococo":
         graph = load_graph('frozen_models/frozen_rococo.pb')
     elif var.get() == "Ukiyo-e":
         graph = load_graph('frozen_models/frozen_ukiyo.pb')
@@ -90,25 +90,25 @@ def real_time():
     cap = cv2.VideoCapture(0)
     fps = video.FPS().start()
     while True:
-        # Obtenemos el frame.
+        # Get the actual frame
         ret, frame = cap.read()
-        # Se reduce el tamaño del frame a uno procesable por pix2pix
+        # Reducing the size of the frame to 256x256
         frame_resize = resize_out(frame)
-        # Se aplica pre procesamiento del frame.
+        # Pre-processing the frame
         gray_image = cv2.cvtColor(frame_resize, cv2.COLOR_BGR2GRAY)
         gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-        # Se extraen los bordes.
+        # Extracting the borders (edges)
         edge = 255 -  auto_canny(gaussian_image)
         edge_color = edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
         black_image = np.zeros(edge.shape, np.uint8)
-        # Se genera la predicción.
+        # SGenerating predictions
         combined_image = np.concatenate([edge, black_image], axis=1)
         image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
         generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
         image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
         image_normal = np.concatenate([frame_resize, edge_color, image_bgr], axis=1)
 
-        cv2.imshow('Tiempo real', image_normal)
+        cv2.imshow('Real time', image_normal)
 
         fps.update()
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -122,38 +122,38 @@ def real_time():
 
 
 def load_image():
-    # Ruta de la imagen a transformar
+    # Path to the image to translate
     image_path = askopenfilename()
-    # Cambiamos el tamaño de la imagen a 256x256 px
-    # Salvamos la imagen original.
+    # Size of the image to 256x256
+    # Saving the original image
     image = resize_out(cv2.imread(image_path))
-    # Pre procesamos la imagen
+    # Pre-processing image
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-    # Obtenemos los bordes de la imagen
+    # Getting edges
     edge = 255 -  auto_canny(gaussian_image)
     edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
     black_image = np.zeros(edge.shape, np.uint8)
     # TensorFlow
-    if var.get() == "Rococó":
+    if var.get() == "Rococo":
         graph = load_graph('frozen_models/frozen_rococo.pb')
     elif var.get() == "Ukiyo-e":
         graph = load_graph('frozen_models/frozen_ukiyo.pb')
     else:
         graph = load_graph('frozen_models/frozen_fauvism.pb')
 
-    # Se cargan los tensores.
+    # Loading tensors
     image_tensor = graph.get_tensor_by_name('image_tensor:0')
     output_tensor = graph.get_tensor_by_name('generate_output/output:0')
     sess = tf.Session(graph=graph)
 
-    # Se genera la predicción.
+    # Generating predictions
     combined_image = np.concatenate([edge, black_image], axis=1)
     image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
     generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
     image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
     image_normal = np.concatenate([image, edge_color, image_bgr], axis=1)
-    save_path = askdirectory(title='Directorio de guardado')
+    save_path = askdirectory(title='Folder to save:')
     save_path = save_path+"/"+var.get()+"_transformed.png"
     cv2.imwrite(save_path,image_normal)
     cv2.imshow('Output', cv2.imread(save_path))
@@ -162,7 +162,7 @@ def load_image():
 
 def translate_video():
         # TensorFlow
-        if var.get() == "Rococó":
+        if var.get() == "Rococo":
             graph = load_graph('frozen_models/frozen_rococo.pb')
         elif var.get() == "Ukiyo-e":
             graph = load_graph('frozen_models/frozen_ukiyo.pb')
@@ -174,12 +174,12 @@ def translate_video():
         output_tensor = graph.get_tensor_by_name('generate_output/output:0')
         sess = tf.Session(graph=graph)
 
-        # Directorio del archivo.
+        # DPath to the video file
         video_path = askopenfilename()
 
-        #Definición del CODEC
+        # Defining the video codec
         cap = cv2.VideoCapture(video_path)
-        save_path = askdirectory(title='Directorio de guardado')
+        save_path = askdirectory(title='Folder to save:')
         save_path = save_path+"/video_transformed.avi"
         fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', 'V')
         out = cv2.VideoWriter(save_path, fourcc, 25, (768,256))
@@ -187,31 +187,31 @@ def translate_video():
         # OpenCV
 
         if cap.isOpened() == False:
-            print('Imposible obtener los datos del video.')
+            print('Imposible to get the video data')
         while True:
-            # Obtenemos el frame.
+            # Getting the actual frame
             ret, frame = cap.read()
             if ret == True:
-                # Se reduce el tamaño del frame a uno procesable por pix2pix
+                # Reducing the size to 256x256
                 frame_resize = resize_out(frame)
-                # Se aplica pre procesamiento del frame.
+                # Pre-processing to the frame
                 gray_image = cv2.cvtColor(frame_resize, cv2.COLOR_BGR2GRAY)
                 gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-                # Se extraen los bordes.
+                # Extracting edges
                 edge = 255 -  auto_canny(gaussian_image)
                 edge_color = edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
                 black_image = np.zeros(edge.shape, np.uint8)
-                # Se genera la predicción.
+                # Generating predictions
                 combined_image = np.concatenate([edge, black_image], axis=1)
                 image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
                 generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
                 image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
                 image_normal = np.concatenate([frame_resize, edge_color, image_bgr], axis=1)
 
-                #Se escribe el cuadro en al salida.
+                # Ploting the frame
                 out.write(image_normal)
 
-                cv2.imshow('Procesando...', image_normal)
+                cv2.imshow('Processing...', image_normal)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
             else:
@@ -220,18 +220,18 @@ def translate_video():
         sess.close()
         cap.release()
         out.release()
-        print('Ha terminado la traducción.')
+        print('Finished!')
         cv2.destroyAllWindows()
 
-# Opciones de la interfaz.
-# Funcionalidad de dibujo libre para transformar.
-btn_tiempo_real = tk.Button(root, text="Tiempo Real", command = real_time).place(x=37, y = 80)
+# UI elements
+# Real time button
+btn_tiempo_real = tk.Button(root, text="Real time", command = real_time).place(x=37, y = 80)
 
-# Funcionalidad de insertar imagen para transformar.
-btn_insertar_imagen = tk.Button(root, text="Traducir Imagen", command = load_image).place(x=37, y=140)
+# Image translation button
+btn_insertar_imagen = tk.Button(root, text="Image translation", command = load_image).place(x=37, y=140)
 
-# Funcionalidad de guardar la Imagen
-btn_video = tk.Button(root, text="Traducir Video", command = translate_video).place(x=37, y=190)
+# Video translation button
+btn_video = tk.Button(root, text="Video translation", command = translate_video).place(x=37, y=190)
 
 
 root.mainloop()

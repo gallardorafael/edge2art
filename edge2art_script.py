@@ -11,13 +11,13 @@ DOWNSAMPLE_RATIO = 4
 parser = argparse.ArgumentParser()
 parser.add_argument("--mode", required=True, choices=["photo", "video", "realtime"])
 parser.add_argument("--style", required=True, choices=["rococo", "ukiyo", "fauvism", "vangogh"])
-parser.add_argument("--input_dir", required=False, help="PATH de la imagen o el video a traducir")
-parser.add_argument("--output_dir", required=False, help="PATH en donde guardar la imagen o el video")
+parser.add_argument("--input_dir", required=False, help="PATH to the image/video to translate")
+parser.add_argument("--output_dir", required=False, help="PATH to the folder to save the outputs")
 a = parser.parse_args()
 
 
 def load_graph(graph_filename):
-    #Carga el modelo en la memoria.
+    # Loading model in memory
     graph = tf.Graph()
     with graph.as_default():
         od_graph_def = tf.GraphDef()
@@ -34,7 +34,7 @@ def auto_canny(image, sigma=0.33):
     return cv2.Canny(image, lower, upper)
 
 def resize_in(image):
-    # Tamaño a 256x256
+    # Size to 256x256
     height, width = image.shape
     if height != width:
         # crop to correct ratio
@@ -46,7 +46,7 @@ def resize_in(image):
         return image_resize
 
 def resize_out(image):
-    # Tamaño a 256x256
+    # Size to 256x256
     height, width, _ = image.shape
     if height != width:
         # crop to correct ratio
@@ -68,7 +68,7 @@ def real_time():
     elif a.style == "fauvism":
         graph = load_graph('frozen_models/frozen_fauvism.pb')
     else:
-        print("ERROR al seleccionar el ESTILO")
+        print("ERROR: Select the correct STYLE")
     image_tensor = graph.get_tensor_by_name('image_tensor:0')
     output_tensor = graph.get_tensor_by_name('generate_output/output:0')
     sess = tf.Session(graph=graph)
@@ -77,25 +77,25 @@ def real_time():
     cap = cv2.VideoCapture(0)
     fps = video.FPS().start()
     while True:
-        # Obtenemos el frame.
+        # Getting the actual frame
         ret, frame = cap.read()
-        # Se reduce el tamaño del frame a uno procesable por pix2pix
+        # Reducing the image size to 256x256
         frame_resize = resize_out(frame)
-        # Se aplica pre procesamiento del frame.
+        # Pre-processing of the frame
         gray_image = cv2.cvtColor(frame_resize, cv2.COLOR_BGR2GRAY)
         gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-        # Se extraen los bordes.
+        # Extracting edges
         edge = 255 -  auto_canny(gaussian_image)
         edge_color = edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
         black_image = np.zeros(edge.shape, np.uint8)
-        # Se genera la predicción.
+        # Generating predictions
         combined_image = np.concatenate([edge, black_image], axis=1)
         image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
         generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
         image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
         image_normal = np.concatenate([frame_resize, edge_color, image_bgr], axis=1)
 
-        cv2.imshow('Tiempo real', image_normal)
+        cv2.imshow('Real time', image_normal)
 
         fps.update()
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -109,15 +109,14 @@ def real_time():
 
 
 def load_image():
-    # Ruta de la imagen a transformar
+    # Path to the image to translate
     image_path = a.input_dir
-    # Cambiamos el tamaño de la imagen a 256x256 px
-    # Salvamos la imagen original.
+    # Resizing image to 256x256 and saving original image
     image = resize_out(cv2.imread(image_path))
-    # Pre procesamos la imagen
+    # PPre-processing image
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-    # Obtenemos los bordes de la imagen
+    # Extracting edges
     edge = 255 -  auto_canny(gaussian_image)
     edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
     black_image = np.zeros(edge.shape, np.uint8)
@@ -131,14 +130,14 @@ def load_image():
     elif a.style == "fauvism":
         graph = load_graph('frozen_models/frozen_fauvism.pb')
     else:
-        print("ERROR al seleccionar el ESTILO")
+        print("ERROR: Select the correct STYLE")
 
-    # Se cargan los tensores.
+    # Loading tensors
     image_tensor = graph.get_tensor_by_name('image_tensor:0')
     output_tensor = graph.get_tensor_by_name('generate_output/output:0')
     sess = tf.Session(graph=graph)
 
-    # Se genera la predicción.
+    # Generating predictions
     combined_image = np.concatenate([edge, black_image], axis=1)
     image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
     generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
@@ -161,15 +160,15 @@ def translate_video():
         elif a.style == "fauvism":
             graph = load_graph('frozen_models/frozen_fauvism.pb')
         else:
-            print("ERROR al seleccionar el ESTILO")
+            print("ERROR: Select the correct STYLE")
         image_tensor = graph.get_tensor_by_name('image_tensor:0')
         output_tensor = graph.get_tensor_by_name('generate_output/output:0')
         sess = tf.Session(graph=graph)
 
-        # Directorio del archivo.
+        # Path to the video file
         video_path = a.input_dir
 
-        #Definición del CODEC
+        # Defining the video codec
         cap = cv2.VideoCapture(video_path)
         save_path = a.output_dir
         fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', 'V')
@@ -178,31 +177,31 @@ def translate_video():
         # OpenCV
 
         if cap.isOpened() == False:
-            print('Imposible obtener los datos del video.')
+            print('ERROR: Imposible to get the video data.')
         while True:
-            # Obtenemos el frame.
+            # Getting the actual frame
             ret, frame = cap.read()
             if ret == True:
-                # Se reduce el tamaño del frame a uno procesable por pix2pix
+                # Resizing frame to 256x256
                 frame_resize = resize_out(frame)
-                # Se aplica pre procesamiento del frame.
+                # SPre-processing the frame
                 gray_image = cv2.cvtColor(frame_resize, cv2.COLOR_BGR2GRAY)
                 gaussian_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-                # Se extraen los bordes.
+                # Extracting edges
                 edge = 255 -  auto_canny(gaussian_image)
                 edge_color = edge_color = cv2.cvtColor(edge, cv2.COLOR_GRAY2BGR)
                 black_image = np.zeros(edge.shape, np.uint8)
-                # Se genera la predicción.
+                # Generating predictions
                 combined_image = np.concatenate([edge, black_image], axis=1)
                 image_rgb = cv2.cvtColor(combined_image, cv2.COLOR_BGR2RGB)  # OpenCV uses BGR instead of RGB
                 generated_image = sess.run(output_tensor, feed_dict={image_tensor: image_rgb})
                 image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
                 image_normal = np.concatenate([frame_resize, edge_color, image_bgr], axis=1)
 
-                #Se escribe el cuadro en al salida.
+                # Ploting the frame
                 out.write(image_normal)
 
-                cv2.imshow('Procesando...', image_normal)
+                cv2.imshow('Processing...', image_normal)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
             else:
@@ -211,7 +210,7 @@ def translate_video():
         sess.close()
         cap.release()
         out.release()
-        print('Ha terminado la traducción.')
+        print('Finished!')
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
@@ -223,4 +222,4 @@ if __name__ == "__main__":
     elif a.mode == "realtime":
         real_time()
     else:
-        print("ERROR en la selección de MODO")
+        print("ERROR: Select the correct MODE")

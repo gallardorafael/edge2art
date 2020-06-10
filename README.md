@@ -1,4 +1,7 @@
 # edge2art
+This is the repository for the paper [edge2art: Edges to Artworks Translation with Conditional
+Generative Adversarial Networks](http://www.aniei.org.mx/Archivos/Memorias/Libro_Electronico_CNCIIC2019.pdf), published in the book: [Avances en la Transformación Digital hacia la industria 4.0](http://www.aniei.org.mx/Archivos/Memorias/Libro_Electronico_CNCIIC2019.pdf), pp. 213--222.
+
 Project based on the Pix2Pix model ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Image to Image Translation with Condicional Generative Adversarial Networks
 
 ## Functionalities
@@ -140,4 +143,19 @@ python3 edge2art_script.py --mode photo --style <style> --input_dir <path to ima
 Running edge2art_script in video translation mode:
 ```sh
 python3 edge2art_script.py --mode video --style <style> --input_dir <path to video file> --output_dir <path to save the translated video> 
+```
+
+## Citations
+If you use this work or the edge2art datasets and you would like to cite:
+```
+@inproceedings{Gallardo2019edge,
+	title={edge2art: Edges to Artworks Translation with Conditional
+Generative Adversarial Networks},
+	author={Gallardo-García, Rafael and Beltrán-Martínez, Beatriz and Cerón Garnica, Carmen and Vilariño Ayala, Darnes},
+	booktitle={Avances en la Transformación Digital hacia la industria 4.0},
+	pages={213--222},
+	year={2018},
+	organization={Congreso Nacional e Internacional de Informática y Computación de la ANIEI},
+ publisher={Alfaomega Grupo Editor}
+}
 ```

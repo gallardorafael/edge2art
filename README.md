@@ -1,6 +1,6 @@
 # edge2art
-This is the repository for the paper [edge2art: Edges to Artworks Translation with Conditional
-Generative Adversarial Networks](http://www.aniei.org.mx/Archivos/Memorias/Libro_Electronico_CNCIIC2019.pdf), published in the book: [Avances en la Transformación Digital hacia la industria 4.0](http://www.aniei.org.mx/Archivos/Memorias/Libro_Electronico_CNCIIC2019.pdf), pp. 213--222.
+This is the repository for the paper ***edge2art: Edges to Artworks Translation with Conditional
+Generative Adversarial Networks***, published in the book: [Avances en la Transformación Digital hacia la industria 4.0](http://www.aniei.org.mx/Archivos/Memorias/Libro_Electronico_CNCIIC2019.pdf), pp. 213--222.
 
 Project based on the Pix2Pix model ***[Pix2Pix](https://phillipi.github.io/pix2pix/)***: Image to Image Translation with Condicional Generative Adversarial Networks
 

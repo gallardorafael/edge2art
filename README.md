@@ -149,13 +149,12 @@ python3 edge2art_script.py --mode video --style <style> --input_dir <path to vid
 If you use this work or the edge2art datasets and you would like to cite:
 ```
 @inproceedings{Gallardo2019edge,
-	title={edge2art: Edges to Artworks Translation with Conditional
-Generative Adversarial Networks},
+	title={edge2art: Edges to Artworks Translation with Conditional Generative Adversarial Networks},
 	author={Gallardo-García, Rafael and Beltrán-Martínez, Beatriz and Cerón Garnica, Carmen and Vilariño Ayala, Darnes},
 	booktitle={Avances en la Transformación Digital hacia la industria 4.0},
 	pages={213--222},
 	year={2018},
 	organization={Congreso Nacional e Internacional de Informática y Computación de la ANIEI},
- publisher={Alfaomega Grupo Editor}
+ 	publisher={Alfaomega Grupo Editor}
 }
 ```
